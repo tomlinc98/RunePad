@@ -1,17 +1,21 @@
 RunePad = {
     name = "RunePad",
+    maxTabs = 4,
     tabs = {},
-    activeTab = nil
+    activeTab = 1,
+    activeTabsCount = 0
 }
 
 function RunePad:Initialize()
 
     -- Connect UI elements
     self.window = RunePadWindow
-    self.tabs = {}
+    self.addTabButton = RunePadAddTab
 
-    -- Connect the "Add Tab" button and set its handler
-    self.addTabButton = RunePadAddTabButton
+    -- Set text for the "Add Tab" button
+    self.addTabButton:SetText("+")
+
+    -- Define the add tab button's behavior
     self.addTabButton:SetHandler("OnMouseUp", function() self:AddTab() end)
 
     -- Handle moving of the RunePad window
@@ -20,19 +24,42 @@ function RunePad:Initialize()
 
     -- Initialize hidden
     self.window:SetHidden(true)
-    
+
+    -- Add the first tab by default
+    self:AddTab()
+
     d("RunePad initialized.")
 end
 
-
-function RunePad:TabClicked(tabName)
+function RunePad:TabClicked(tabId)
     if self.activeTab then
         self.tabs[self.activeTab].box:SetHidden(true) -- Hide previously active box
     end
 
-    self.activeTab = tabName
-    self.tabs[tabName].box:SetHidden(false) -- Show the new active box
-    d(tabName .. " clicked.")
+    self.activeTab = tabId
+    self.tabs[tabId].box:SetHidden(false) -- Show the new active box
+    d("Tab " .. tabId .. " clicked.")
+end
+
+function RunePad:AddTab()
+    if self.activeTabsCount < self.maxTabs then
+        self.activeTabsCount = self.activeTabsCount + 1
+        local newTabId = self.activeTabsCount
+        self.tabs[newTabId] = {
+            button = _G["RunePadTab" .. newTabId],
+            box = _G["RunePadWindowTab" .. newTabId .. "Box"]
+        }
+        -- set text for the button
+        self.tabs[newTabId].button:SetText("Tab " .. newTabId)
+        self.tabs[newTabId].button:SetHandler("OnMouseUp", function() self:TabClicked(newTabId) end)
+        self.tabs[newTabId].button:SetHidden(false) -- Make button visible by default
+        self.tabs[newTabId].box:SetHidden(true) -- Hide box when tab is added
+        if self.activeTab == newTabId then
+            self:TabClicked(newTabId)
+        end
+    else
+        d("Maximum number of tabs reached.")
+    end
 end
 
 function RunePad:ToggleWindow()
@@ -44,38 +71,6 @@ function RunePad.OnAddOnLoaded(event, addonName)
     if addonName == RunePad.name then
         RunePad:Initialize()
     end
-end
-
-function RunePad:AddTab()
-    -- Generate a unique tab name
-    local tabName = "Tab" .. tostring(#self.tabs + 1)
-
-    -- Create a new button for the tab
-    local newTabButton = WINDOW_MANAGER:CreateControl("RunePadTab" .. tabName, RunePadWindow, CT_BUTTON)
-    newTabButton:SetDimensions(100, 30)
-    
-    -- Position the new tab next to the last tab
-    local offsetX = 10 + #self.tabs * 110 -- 110 = width of a tab + 10 for spacing
-    newTabButton:SetAnchor(TOPLEFT, RunePadWindow, TOPLEFT, offsetX, 10)
-    
-    -- Create the text box for the new tab
-    local newTextBox = WINDOW_MANAGER:CreateControlFromVirtual("RunePadWindowTab" .. tabName .. "Box", RunePadWindow, "ZO_DefaultEditForBackdrop")
-    newTextBox:SetDimensions(480, 450)
-    newTextBox:SetAnchor(TOPLEFT, newTabButton, BOTTOMLEFT, 0, 10)
-    newTextBox:SetHidden(true)
-
-    -- Add the new tab to the tabs table
-    self.tabs[tabName] = {
-        button = newTabButton,
-        box = newTextBox
-    }
-
-    -- Set up the OnMouseUp handler for the new tab
-    newTabButton:SetHandler("OnMouseUp", function() self:TabClicked(tabName) end)
-
-    -- Update the position of the "Add Tab" button
-    offsetX = offsetX + 110
-    self.addTabButton:SetAnchor(TOPLEFT, RunePadWindow, TOPLEFT, offsetX, 10)
 end
 
 -- Event handlers

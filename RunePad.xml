@@ -1,40 +1,83 @@
 <GuiXml>
 	<Controls>
-		<TopLevelControl name="RunePadWindow"  mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true">
+		<TopLevelControl name="RunePadWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true">
 			<Dimensions x="500" y="500" />
-			<Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT"/>
+			<Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" />
 			<Controls>
 				<Backdrop name="$(parent)Backdrop" centerColor="000000" layer="0" level="0" edgeColor="000000" alpha="0.6">
 					<Dimensions x="500" y="500" />
 					<Anchor point="TOPLEFT" relativeTo="$(parent)" />
 					<Edge edgeSize="1" />
 				</Backdrop>
-				<Button name="RunePadTab1" inherits="ZO_DefaultButton">
-					<Dimensions x="100" y="30" />
+				<Button name="RunePadAddTab" inherits="ZO_DefaultButton">
+					<Dimensions x="40" y="30" />
 					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetX="10" offsetY="10" />
-					<Controls>
-						<Label name="$(parent)Label" font="ZoFontGameBold" text="Tab 1" color="FFFFFF">
-							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-						</Label>
-					</Controls>
 				</Button>
-				<Button name="RunePadTab2" inherits="ZO_DefaultButton">
+				<!-- Start of Tabs -->
+				<!-- Tab 1 -->
+				<Button name="RunePadTab1" inherits="ZO_DefaultButton" hidden="true">
 					<Dimensions x="100" y="30" />
-					<Anchor point="TOPLEFT" relativeTo="RunePadTab1" relativePoint="TOPRIGHT" offsetX="10" offsetY="0" />
-					<Controls>
-						<Label name="$(parent)Label" font="ZoFontGameBold" text="Tab 2" color="FFFFFF">
-							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-						</Label>
-					</Controls>
+					<Anchor point="TOPLEFT" relativeTo="RunePadAddTab" offsetX="50" offsetY="0" />
 				</Button>
-				<EditBox name="RunePadWindowTab1Box" inherits="ZO_DefaultEditForBackdrop">
-					<Dimensions x="480" y="450" />
-					<Anchor point="TOPLEFT" relativeTo="RunePadTab1" relativePoint="BOTTOMLEFT" offsetX="0" offsetY="10" />
-				</EditBox>
-				<EditBox name="RunePadWindowTab2Box" inherits="ZO_DefaultEditForBackdrop">
-					<Dimensions x="480" y="450" />
-					<Anchor point="TOPLEFT" relativeTo="RunePadTab1" relativePoint="BOTTOMLEFT" offsetX="0" offsetY="10" />
-				</EditBox>
+				<Backdrop name="RunePadWindowTab1Box" centerColor="000000" layer="10" level="1" edgeColor="000000" alpha="0.6" hidden="true">
+					<Dimensions x="460" y="430" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetX="20" offsetY="50" />
+					<Edge edgeSize="1" />
+					<Controls>
+						<EditBox name="$(parent)Edit" inherits="ZO_DefaultEditForBackdrop">
+							<Dimensions x="440" y="410" />
+							<AnchorFill />
+						</EditBox>
+					</Controls>
+				</Backdrop>
+				<!-- Tab 2-->
+				<Button name="RunePadTab2" inherits="ZO_DefaultButton" hidden="true">
+					<Dimensions x="100" y="30" />
+					<Anchor point="TOPLEFT" relativeTo="RunePadTab1" offsetX="100" offsetY="0" />
+				</Button>
+				<Backdrop name="RunePadWindowTab2Box" centerColor="000000" layer="10" level="1" edgeColor="000000" alpha="0.6" hidden="true">
+					<Dimensions x="460" y="430" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetX="20" offsetY="50" />
+					<Edge edgeSize="1" />
+					<Controls>
+						<EditBox name="$(parent)Edit" inherits="ZO_DefaultEditForBackdrop">
+							<Dimensions x="440" y="410" />
+							<AnchorFill />
+						</EditBox>
+					</Controls>
+				</Backdrop>
+				<!-- Tab 3-->
+				<Button name="RunePadTab3" inherits="ZO_DefaultButton" hidden="true">
+					<Dimensions x="100" y="30" />
+					<Anchor point="TOPLEFT" relativeTo="RunePadTab2" offsetX="100" offsetY="0" />
+				</Button>
+				<Backdrop name="RunePadWindowTab3Box" centerColor="000000" layer="10" level="1" edgeColor="000000" alpha="0.6" hidden="true">
+					<Dimensions x="460" y="430" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetX="20" offsetY="50" />
+					<Edge edgeSize="1" />
+					<Controls>
+						<EditBox name="$(parent)Edit" inherits="ZO_DefaultEditForBackdrop">
+							<Dimensions x="440" y="410" />
+							<AnchorFill />
+						</EditBox>
+					</Controls>
+				</Backdrop>
+				<!-- Tab 4-->
+				<Button name="RunePadTab4" inherits="ZO_DefaultButton" hidden="true">
+					<Dimensions x="100" y="30" />
+					<Anchor point="TOPLEFT" relativeTo="RunePadTab3" offsetX="100" offsetY="0" />
+				</Button>
+				<Backdrop name="RunePadWindowTab4Box" centerColor="000000" layer="10" level="1" edgeColor="000000" alpha="0.6" hidden="true">
+					<Dimensions x="460" y="430" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetX="20" offsetY="50" />
+					<Edge edgeSize="1" />
+					<Controls>
+						<EditBox name="$(parent)Edit" inherits="ZO_DefaultEditForBackdrop">
+							<Dimensions x="440" y="410" />
+							<AnchorFill />
+						</EditBox>
+					</Controls>
+				</Backdrop>
 			</Controls>
 		</TopLevelControl>
 	</Controls>
